@@ -1,0 +1,17 @@
+D:\vs_proj\Vweather\bin\Debug\net6.0\Vweather.exe
+D:\vs_proj\Vweather\bin\Debug\net6.0\Vweather.deps.json
+D:\vs_proj\Vweather\bin\Debug\net6.0\Vweather.runtimeconfig.json
+D:\vs_proj\Vweather\bin\Debug\net6.0\Vweather.dll
+D:\vs_proj\Vweather\bin\Debug\net6.0\Vweather.pdb
+D:\vs_proj\Vweather\obj\Debug\net6.0\Vweather.csproj.AssemblyReference.cache
+D:\vs_proj\Vweather\obj\Debug\net6.0\Vweather.GeneratedMSBuildEditorConfig.editorconfig
+D:\vs_proj\Vweather\obj\Debug\net6.0\Vweather.AssemblyInfoInputs.cache
+D:\vs_proj\Vweather\obj\Debug\net6.0\Vweather.AssemblyInfo.cs
+D:\vs_proj\Vweather\obj\Debug\net6.0\Vweather.csproj.CoreCompileInputs.cache
+D:\vs_proj\Vweather\obj\Debug\net6.0\Vweather.dll
+D:\vs_proj\Vweather\obj\Debug\net6.0\refint\Vweather.dll
+D:\vs_proj\Vweather\obj\Debug\net6.0\Vweather.pdb
+D:\vs_proj\Vweather\obj\Debug\net6.0\Vweather.genruntimeconfig.cache
+D:\vs_proj\Vweather\obj\Debug\net6.0\ref\Vweather.dll
+D:\vs_proj\Vweather\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\vs_proj\Vweather\obj\Debug\net6.0\Vweather.csproj.CopyComplete
