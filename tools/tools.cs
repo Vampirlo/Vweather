@@ -10,11 +10,141 @@ namespace Vweather
 {
     internal class tools
     {
-        public static void selectWeatherToChange(OpenWeather.OpenWeather oW, string path)
+        //проверка пустой строки
+        public static void varEmpOrNull(string str, string nameOfvar)
         {
+            if (string.IsNullOrEmpty(str))
+            {
+                string _str = nameOfvar + " is null or empty";
+                DateTime thisDay = DateTime.Now;
+                tools.ExLog(thisDay.ToString(), _str);
+                Environment.Exit(0);
+            }
+        }
+        // перегрузка для int
+        public static void varEmpOrNull(int mSec, string nameOfvar)
+        {
+            if (mSec <=0)
+            {
+                string _str = nameOfvar + " is null or empty";
+                DateTime thisDay = DateTime.Now;
+                tools.ExLog(thisDay.ToString(), _str);
+                Environment.Exit(0);
+            }
+        }
+        // создание лога и запись
+        public static void ExLog(string date, string EX)
+        {
+            if (!File.Exists(GetFilePath("Ex.log")))
+            {
+                using (File.Create(GetFilePath("Ex.log")));
+            }
+            StreamWriter writer = new StreamWriter(GetFilePath("Ex.log"), true);
+            writer.WriteLine(date+" - "+EX);
+            writer.Close();
 
         }
-        // find weather type and change
+        // выбор погоды в зависимости от полученного json
+        public static void selectWeatherToChange(OpenWeather.OpenWeather oW, string path)
+        {
+            string textForReplac = string.Empty;
+            // Thunderstorm
+            if ((oW.weather[0].id == 200) | (oW.weather[0].id == 201) | (oW.weather[0].id == 210) |
+                (oW.weather[0].id == 211) | (oW.weather[0].id == 230) | (oW.weather[0].id == 231))
+            {
+                textForReplac = "w_storm1";
+                ChangeText(path, textForReplac);
+            }
+            else if ((oW.weather[0].id == 202) | (oW.weather[0].id == 212) | (oW.weather[0].id == 221) | (oW.weather[0].id == 232))
+            {
+                textForReplac = "w_storm2";
+                ChangeText(path, textForReplac);
+            }
+            // Drizzle
+            else if ((oW.weather[0].id == 300) | (oW.weather[0].id == 301))
+            {
+                textForReplac = "w_rain1";
+                ChangeText(path, textForReplac);
+            }
+            else if ((oW.weather[0].id == 300) | (oW.weather[0].id == 310) | (oW.weather[0].id == 311))
+            {
+                textForReplac = "w_rain2";
+                ChangeText(path, textForReplac);
+            }
+            else if ((oW.weather[0].id == 302) | (oW.weather[0].id == 312) | (oW.weather[0].id == 313) | (oW.weather[0].id == 314) | (oW.weather[0].id == 321))
+            {
+                textForReplac = "w_rain3";
+                ChangeText(path, textForReplac);
+            }
+            // Rain
+            else if ((oW.weather[0].id == 500) | (oW.weather[0].id == 501) | (oW.weather[0].id == 511))
+            {
+                textForReplac = "w_rain1";
+                ChangeText(path, textForReplac);
+            }
+            else if ((oW.weather[0].id == 502) | (oW.weather[0].id == 503) | (oW.weather[0].id == 520) | (oW.weather[0].id == 521))
+            {
+                textForReplac = "w_rain2";
+                ChangeText(path, textForReplac);
+            }
+            else if ((oW.weather[0].id == 504) | (oW.weather[0].id == 522) | (oW.weather[0].id == 531))
+            {
+                textForReplac = "w_rain3";
+                ChangeText(path, textForReplac);
+            }
+            // Snow
+            else if ((oW.weather[0].id == 600) | (oW.weather[0].id == 611) | (oW.weather[0].id == 615))
+            {
+                textForReplac = "w_rain1";
+                ChangeText(path, textForReplac);
+            }
+            else if ((oW.weather[0].id == 601) | (oW.weather[0].id == 612) | (oW.weather[0].id == 616))
+            {
+                textForReplac = "w_rain2";
+                ChangeText(path, textForReplac);
+            }
+            else if ((oW.weather[0].id == 602) | (oW.weather[0].id == 613) | (oW.weather[0].id == 620) | (oW.weather[0].id == 621) | (oW.weather[0].id == 622))
+            {
+                textForReplac = "w_rain3";
+                ChangeText(path, textForReplac);
+            }
+            // Atmosphere
+            else if ((oW.weather[0].id == 701) | (oW.weather[0].id == 711) | (oW.weather[0].id == 751))
+            {
+                textForReplac = "w_foggy1";
+                ChangeText(path, textForReplac);
+            }
+            else if ((oW.weather[0].id == 721) | (oW.weather[0].id == 731) | (oW.weather[0].id == 741) | (oW.weather[0].id == 761) | (oW.weather[0].id == 762) |
+                (oW.weather[0].id == 771) | (oW.weather[0].id == 781))
+            {
+                textForReplac = "w_foggy2";
+                ChangeText(path, textForReplac);
+            }
+            // clear
+            else if (oW.weather[0].id == 800)
+            {
+                textForReplac = "w_clear1";
+                ChangeText(path, textForReplac);
+            }
+            // Clouds
+            else if ((oW.weather[0].id == 801))
+            {
+
+                textForReplac = "w_clear2";
+                ChangeText(path, textForReplac);
+            }
+            else if ((oW.weather[0].id == 802) | (oW.weather[0].id == 803))
+            {
+                textForReplac = "w_cloudy1";
+                ChangeText(path, textForReplac);
+            }
+            else if ((oW.weather[0].id == 804))
+            {
+                textForReplac = "w_cloudy2_dark";
+                ChangeText(path, textForReplac);
+            }
+        }
+        // find weather type in file and change
         public static void ChangeText(string path, string textForReplac)
         {
             StreamReader reader = new StreamReader(path);
@@ -35,7 +165,18 @@ namespace Vweather
             WebRequest request = WebRequest.Create(url);
             request.Method = "POST";
             request.ContentType = "application/x-www-urlencoded";
-            WebResponse response = await request.GetResponseAsync();
+            WebResponse response = null;
+            try
+            {
+                response = await request.GetResponseAsync();
+            }
+            catch (Exception ex)
+            {
+                string _strEx = ex.Message;
+                DateTime thisDay = DateTime.Now;
+                ExLog(thisDay.ToString(), _strEx);
+                Environment.Exit(0);
+            }
 
             string answer = string.Empty;
 
