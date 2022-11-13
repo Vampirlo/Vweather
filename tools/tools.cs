@@ -10,6 +10,31 @@ namespace Vweather
 {
     internal class tools
     {
+        public static void _iniFileCreate(string vWeatheriniFileName)
+        {
+            using (File.Create(vWeatheriniFileName));
+            INIManager  manager = new INIManager(vWeatheriniFileName);
+            manager.WritePrivateString("SETTINGS", "LOCATION", "");
+            manager.WritePrivateString("SETTINGS", "API_KEY", "");
+            manager.WritePrivateString("SETTINGS", "Game_Folder", "");
+            manager.WritePrivateString("SETTINGS", "Refresh_Time", "");
+            manager.WritePrivateString("SETTINGS", "Press_To_Update", "");
+            DateTime thisDay = DateTime.Now;
+            tools.ExLog(thisDay.ToString(), "ini file was not found. File has been created. Please enter the settings in the file");
+            Environment.Exit(0);
+        }
+        public static void initializeScript(string _VweatherMainScriptPath)
+        {
+            using (File.Create(_VweatherMainScriptPath));
+            StreamWriter writer = new StreamWriter(_VweatherMainScriptPath, true);
+            string firstWeather = "level.set_weather(\"w_cloudy1\", true)";
+            writer.WriteLine(firstWeather);
+            writer.Close();
+            DateTime thisDay = DateTime.Now;
+            string str = "required file was not found in the game directory. File has been created. File path - " + _VweatherMainScriptPath;
+            tools.ExLog(thisDay.ToString(), str);
+        }
+
         //проверка пустой строки
         public static void varEmpOrNull(string str, string nameOfvar)
         {
@@ -17,7 +42,7 @@ namespace Vweather
             {
                 string _str = nameOfvar + " is null or empty";
                 DateTime thisDay = DateTime.Now;
-                tools.ExLog(thisDay.ToString(), _str);
+                ExLog(thisDay.ToString(), _str);
                 Environment.Exit(0);
             }
         }
@@ -26,9 +51,9 @@ namespace Vweather
         {
             if (mSec <=0)
             {
-                string _str = nameOfvar + " is null or empty";
+                string _str = nameOfvar + " is less than zero or empty";
                 DateTime thisDay = DateTime.Now;
-                tools.ExLog(thisDay.ToString(), _str);
+                ExLog(thisDay.ToString(), _str);
                 Environment.Exit(0);
             }
         }
@@ -172,9 +197,8 @@ namespace Vweather
             }
             catch (Exception ex)
             {
-                string _strEx = ex.Message;
                 DateTime thisDay = DateTime.Now;
-                ExLog(thisDay.ToString(), _strEx);
+                ExLog(thisDay.ToString(), ex.Message);
                 Environment.Exit(0);
             }
 
