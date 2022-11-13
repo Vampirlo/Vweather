@@ -18,6 +18,7 @@ namespace Vweather
             string _VweatherMainScriptPath = string.Empty;
             string url = string.Empty;
             bool waitKey = false;
+            bool _debug = false;
 
             OpenWeather.OpenWeather oW;
 
@@ -36,6 +37,7 @@ namespace Vweather
                 gamePath = manager.GetPrivateString("SETTINGS", "Game_Folder");
                 refreshTime = Convert.ToInt32(manager.GetPrivateString("SETTINGS", "Refresh_Time"));
                 waitKey = Convert.ToBoolean(manager.GetPrivateString("SETTINGS", "Press_To_Update"));
+                _debug = Convert.ToBoolean(manager.GetPrivateString("SETTINGS", "debug"));
             }
             catch (Exception ex)
             {
@@ -43,7 +45,8 @@ namespace Vweather
                 tools.ExLog(thisDay.ToString(), ex.Message);
                 Environment.Exit(0);
             }
-
+            if (!_debug)
+                tools.gamePathCheck(gamePath);
             tools.varEmpOrNull(refreshTime, nameof(refreshTime));
             tools.varEmpOrNull(location, nameof(location));
             tools.varEmpOrNull(key, nameof(key));
@@ -71,6 +74,8 @@ namespace Vweather
                         case ConsoleKey.U:
                             oW = JsonConvert.DeserializeObject<OpenWeather.OpenWeather>(await tools.GetJsonAsync(url));
                             tools.selectWeatherToChange(oW, _VweatherMainScriptPath);
+                            Console.Clear();
+                            Console.WriteLine("\nThe weather has been updated\n");
                             break;
                         case ConsoleKey.E:
                             Environment.Exit(0);
@@ -78,7 +83,6 @@ namespace Vweather
                         default:
                             Console.WriteLine("\ninvalid key");
                             goto invalidkey;
-                            break;
                     }
                 }
             }
@@ -87,6 +91,9 @@ namespace Vweather
             {
                 oW = JsonConvert.DeserializeObject<OpenWeather.OpenWeather>(await tools.GetJsonAsync(url));
                 tools.selectWeatherToChange(oW, _VweatherMainScriptPath);
+                DateTime thisDay = DateTime.Now;
+                Console.Clear();
+                Console.WriteLine(thisDay.ToString() + "\nThe weather has been updated\n");
                 Thread.Sleep(refreshTime);
             }
         }
