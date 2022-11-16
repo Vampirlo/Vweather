@@ -5,9 +5,36 @@ local function get_game_path()
     return game_path
 end
 
+local function howTimeSkipToRealTime(Real)
+  local Game = level.get_time_hours()
+  local SkipTime
+  if Game == 0 then
+    Game = 24
+  end
+  if Game > Real then
+      SkipTime =  24 - Game + Real
+      return SkipTime
+  end
+
+  if Game < Real then
+      SkipTime = Real - Game
+      return SkipTime
+  end
+
+  if Game == Real then
+      return 0
+  end
+  
+end
+
 local function on_level_changing()
 	local status, result = pcall(dofile, get_game_path().."gamedata\\scripts\\Vweather.script")
   get_console():execute(status and "Successful!" or string.gsub(result, " ", "_"))
+  local file = io.open(get_game_path().."gamedata\\scripts\\weatherbuffer.dat", "r")
+  local realTime = file:read()
+  file:close()
+
+  level.change_game_time(0,howTimeSkipToRealTime(tonumber(realTime)),0)
 end
 
 

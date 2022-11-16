@@ -10,12 +10,14 @@ namespace Vweather
     {
         static async Task Main(string[] args)
         {
-            int refreshTime = 0; 
+            int refreshTime = 0;
+            int refreshBufferTime = 6000;
             string vWeatheriniFileName = "Vweather.ini";
             string location = string.Empty;
             string key = string.Empty;
             string gamePath = string.Empty;
             string _VweatherMainScriptPath = string.Empty;
+            string _VweatherTimeBufferPath = string.Empty;
             string url = string.Empty;
             bool waitKey = false;
             bool _debug = false;
@@ -28,8 +30,6 @@ namespace Vweather
 
             //ini
             INIManager manager = new INIManager(tools.GetFilePath(vWeatheriniFileName));
-
-
             try
             {
                 location = manager.GetPrivateString("SETTINGS", "LOCATION");
@@ -53,12 +53,24 @@ namespace Vweather
             tools.varEmpOrNull(gamePath, nameof(gamePath));
 
             _VweatherMainScriptPath = gamePath + "\\gamedata\\scripts\\Vweather.script";
+            _VweatherTimeBufferPath = gamePath + "\\gamedata\\scripts\\weatherbuffer.dat";
 
+            if (!File.Exists(_VweatherTimeBufferPath))
+                tools.initializeTimeBuffer(_VweatherTimeBufferPath);
             if (!File.Exists(_VweatherMainScriptPath))
                 tools.initializeScript(_VweatherMainScriptPath);
 
                 url = "https://api.openweathermap.org/data/2.5/weather?q=" + location + "&units=metric&appid=" + key;
 
+            Thread thread = new Thread(() => 
+            {
+                while (true)
+                {
+                    tools.bufferUpdate(_VweatherTimeBufferPath);
+                    Thread.Sleep(refreshBufferTime);
+                }
+            });
+            thread.Start();
 
             if (waitKey)
             {

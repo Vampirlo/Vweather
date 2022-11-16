@@ -56,6 +56,29 @@ namespace Vweather
             ExLog(thisDay.ToString(), "ini file was not found. File has been created. Please enter the settings in the file");
             Environment.Exit(0);
         }
+        public static void bufferUpdate(string path)
+        {
+            StreamWriter writer = new StreamWriter(path, false);
+            DateTime _thisDay = DateTime.Now;
+            string time = _thisDay.Hour.ToString();
+            if (time == "0")
+                time = "24";
+            writer.WriteLine(time);
+            writer.Close();
+
+        }
+        public static void initializeTimeBuffer(string _VweatherTimeBufferPath)
+        {
+            using (File.Create(_VweatherTimeBufferPath)) ;
+            StreamWriter writer = new StreamWriter(_VweatherTimeBufferPath, true);
+            DateTime _thisDay = DateTime.Now;
+            string time = _thisDay.Hour.ToString();
+            writer.WriteLine(time);
+            writer.Close();
+            //DateTime thisDay = DateTime.Now;
+            //string str = "Required file was not found in the game directory. File has been created. File path - " + _VweatherTimeBufferPath;
+            //ExLog(thisDay.ToString(), str);
+        }
         public static void initializeScript(string _VweatherMainScriptPath)
         {
             using (File.Create(_VweatherMainScriptPath));
@@ -63,9 +86,9 @@ namespace Vweather
             string firstWeather = "level.set_weather(\"w_cloudy1\", true)";
             writer.WriteLine(firstWeather);
             writer.Close();
-            DateTime thisDay = DateTime.Now;
-            string str = "Required file was not found in the game directory. File has been created. File path - " + _VweatherMainScriptPath;
-            ExLog(thisDay.ToString(), str);
+            //DateTime thisDay = DateTime.Now;
+            //string str = "Required file was not found in the game directory. File has been created. File path - " + _VweatherMainScriptPath;
+            //ExLog(thisDay.ToString(), str);
         }
 
         //проверка пустой строки
