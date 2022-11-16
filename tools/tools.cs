@@ -231,7 +231,7 @@ namespace Vweather
             bool weatherTypeIsCorrect = false;
             string[] allWeatherTypes = new string[11] { "w_storm1", "w_storm2", "w_rain1", "w_rain2", "w_rain3", "w_foggy1", "w_foggy2", "w_clear1", "w_clear2",
                 "w_cloudy1", "w_cloudy2_dark"};
-            for (int i = 0; i < (allWeatherTypes.Length - 1); i++)
+            for (int i = 0; i < (allWeatherTypes.Length); i++)
             {
                 if (spStr[1] == allWeatherTypes[i])
                     weatherTypeIsCorrect = true;

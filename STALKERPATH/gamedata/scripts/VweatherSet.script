@@ -1,0 +1,16 @@
+local function get_game_path()
+    local info = debug.getinfo(1,'S');
+    local script_path = info.source:match[[^@?(.*[\/])[^\/]-$]]
+    local game_path = script_path:match("(.*)gamedata"):gsub("/", "\\")
+    return game_path
+end
+
+local function on_level_changing()
+	local status, result = pcall(dofile, get_game_path().."gamedata\\scripts\\Vweather.script")
+  get_console():execute(status and "Successful!" or string.gsub(result, " ", "_"))
+end
+
+
+function on_game_start()
+	RegisterScriptCallback("on_level_changing",on_level_changing)
+end

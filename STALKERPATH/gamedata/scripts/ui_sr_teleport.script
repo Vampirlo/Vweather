@@ -127,19 +127,6 @@ function msg_box_ui:OnMsgOk()
 		psi_storm_manager.get_psi_storm_manager().time_forwarded = true	
 		--Level Transition Travel Simulator (av661194)--
 		
-		--Vweather
-		local function get_game_path()
-			local info = debug.getinfo(1,'S');
-			local script_path = info.source:match[[^@?(.*[\/])[^\/]-$]]
-			local game_path = script_path:match("(.*)gamedata"):gsub("/", "\\")
-			return game_path
-		end
-		local _VweatherPath = get_game_path().."gamedata\\scripts\\Vweather.script"
-		dofile(_VweatherPath)
-
-		--local status, result = pcall(dofile, get_game_path().."gamedata\\scripts\\Vweather.script")
-      	--get_console():execute(status and "Successful!" or string.gsub(result, " ", "_"))
-		--Vweather
 		
 		if (pos and p[4]) then
 			db.actor:set_actor_direction(tonumber(p[4]) or 0)

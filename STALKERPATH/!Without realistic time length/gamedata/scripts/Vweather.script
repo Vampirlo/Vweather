@@ -1,1 +1,1 @@
-level.set_weather("w_storm1", true)
+level.set_weather("w_cloudy2_dark", true)
