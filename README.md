@@ -22,3 +22,6 @@ When you run the program, you may encounter errors in its operation. all foresee
 * **If you are from Russia, North Korea or China**, then you may experience that the program is unable to communicate with the openweathermap server. In this case, you will need to **use VPN**.
 ## Tested builds
 * [Reality 1.2](https://discord.gg/VUcJ2y4gkv)
+## V1.0.0.1
+* Error correction.
+* Now the time in the game is synchronized with your time on the computer (optional).
